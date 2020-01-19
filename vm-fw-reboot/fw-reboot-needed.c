@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #define VARFILE_SIZE                      (1 << 17)  /* 128 K */
-#define VAR_INFO_SIZE                     6
+#define VAR_INFO_SIZE                     6          /* In words */
 #define EFI_OS_INDICATIONS_BOOT_TO_FW_UI  0x0000000000000001
 #define LAST_USE                          0x000f
 
