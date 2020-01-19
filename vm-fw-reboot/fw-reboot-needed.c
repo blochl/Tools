@@ -13,8 +13,7 @@ static const uint16_t var_pattern[] = {
     'O', 's', 'I', 'n', 'd', 'i', 'c', 'a', 't', 'i', 'o', 'n', 's', 0
 };
 
-typedef union info_val
-{
+typedef union info_val {
     uint16_t aux[VAR_INFO_SIZE];
     uint64_t osind;
 } info_val;
@@ -42,9 +41,8 @@ static bool is_fw_reboot_required(char *file_path) {
 
     assert(fsize == VARFILE_SIZE);
 
-    buf = malloc(fsize);
-    if (buf == NULL)
-    {
+    buf = (uint16_t*)malloc(fsize);
+    if (buf == NULL) {
         fprintf(stderr, "Memory error for reading the vars file!\n");
         fclose(ff);
         exit(1);
@@ -54,7 +52,7 @@ static bool is_fw_reboot_required(char *file_path) {
     fread(buf, fsize, 1, ff);
     fclose(ff);
 
-    for(i = 0; i < VARFILE_SIZE / sizeof(buf[0]); i++) {
+    for (i = 0; i < VARFILE_SIZE / sizeof(buf[0]); i++) {
         if (match && k < VAR_INFO_SIZE) {
             val.aux[k] = buf[i];
             k++;
@@ -67,7 +65,7 @@ static bool is_fw_reboot_required(char *file_path) {
                 return true;
             }
         }
-        j = (buf[i] == var_pattern[j])? j + 1 : 0;
+        j = (buf[i] == var_pattern[j]) ? j + 1 : 0;
         match = (j == sizeof(var_pattern) / sizeof(var_pattern[0]));
     }
 
