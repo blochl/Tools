@@ -5,6 +5,7 @@
 1. Install Ubuntu on an EFI system, with two partitions:
     1. An [EFI System Partition (ESP)](https://www.google.com/search?&q=linux+esp).
     1. A **Btrfs** root partition.
+    * For legacy (BIOS, single partition) installations, a separate script (`ubuntu-restore-init-bios.sh`) is available.
 1. Reboot as usual after the installation.
 1. Copy the script to a volatile location (_e.g._ `/run/user/0/`):
     ```
