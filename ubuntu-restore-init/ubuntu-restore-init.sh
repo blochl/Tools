@@ -60,6 +60,15 @@ shutdown -r now
 EOF
 chmod 755 /usr/bin/hard-restore-machine
 
+## Some trivial Ubuntu customizations
+#sed -i '/# enable bash completion/,/^$/{//!s/^#//}' /etc/bash.bashrc
+#mkdir /etc/systemd/system/systemd-networkd-wait-online.service.d
+#cat > /etc/systemd/system/systemd-networkd-wait-online.service.d/override.conf <<EOF
+#[Service]
+#ExecStart=
+#ExecStart=/usr/lib/systemd/systemd-networkd-wait-online --any
+#EOF
+
 # No changes are saved to the image after here
 btrfs subvolume snapshot / /@
 rootname="$(findmnt -n -o SOURCE --target / | cut -d'[' -f1)"
