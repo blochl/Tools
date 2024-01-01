@@ -18,7 +18,7 @@ eval "${apt_install}" 2>/dev/null ||
     eval "${apk_install}" 2>/dev/null ||
     eval "${zypper_install}" 2>/dev/null ||
     {
-        >&2 echo "ERROR: This automation script does not support your distro yet."
+        >&2 echo "ERROR: The installation of the dependencies failed."
         exit 1
     }
 
