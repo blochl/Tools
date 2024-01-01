@@ -8,7 +8,7 @@ unset prefix
 # Get deps
 apt_install="${prefix} apt-get update && apt-get install -y vim git curl universal-ctags silversearcher-ag"
 yum_install="${prefix} yum install -y epel-release && ${prefix} yum install -y vim git ctags the_silver_searcher"
-pacman_install="${prefix} pacman -Sy --noconfirm --needed  vim git curl ctags the_silver_searcher"
+pacman_install="${prefix} pacman-key --init && ${prefix} pacman -Sy --noconfirm --needed archlinux-keyring && ${prefix} pacman -Sy --noconfirm --needed vim git curl ctags the_silver_searcher"
 apk_install="${prefix} apk add vim git curl ctags the_silver_searcher"
 zypper_install="${prefix} zypper install -y vim git curl ctags the_silver_searcher"
 
