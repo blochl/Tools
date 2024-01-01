@@ -1,0 +1,37 @@
+#!/bin/sh
+
+set -e
+
+unset prefix
+[ "$(id -u)" = "0" ] || prefix="sudo"
+
+# Get deps
+apt_install="${prefix} apt-get update && apt-get install -y vim git curl universal-ctags silversearcher-ag"
+yum_install="${prefix} yum install -y epel-release && ${prefix} yum install -y vim git ctags the_silver_searcher"
+pacman_install="${prefix} pacman -Sy --noconfirm --needed  vim git curl ctags the_silver_searcher"
+apk_install="${prefix} apk add vim git curl ctags the_silver_searcher"
+zypper_install="${prefix} zypper install -y vim git curl ctags the_silver_searcher"
+
+eval "${apt_install}" 2>/dev/null ||
+    eval "${yum_install}" 2>/dev/null ||
+    eval "${pacman_install}" 2>/dev/null ||
+    eval "${apk_install}" 2>/dev/null ||
+    eval "${zypper_install}" 2>/dev/null ||
+    {
+        >&2 echo "ERROR: This automation script does not support your distro yet."
+        exit 1
+    }
+
+# Get the .vimrc
+curl -Lfo ~/.vimrc 'https://raw.githubusercontent.com/blochl/dotfiles/main/.vimrc'
+# Get the plugin manager
+curl -Lfo ~/.vim/autoload/plug.vim --create-dirs \
+    'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+# Twice, because the first time is expected to exit with an error, because the
+# plugins aren't there yet. The first call installs, the second - verifies
+# the installation.
+vim -Esu ~/.vimrc +'PlugInstall --sync' +qa ||
+    vim -Esu ~/.vimrc +'PlugInstall --sync' +qa
+
+echo "Success!"
