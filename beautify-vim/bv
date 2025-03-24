@@ -24,6 +24,13 @@ eval "${apt_install}" 2>/dev/null ||
 
 # Get the .vimrc
 curl -Lfo ~/.vimrc 'https://raw.githubusercontent.com/blochl/dotfiles/main/.vimrc'
+
+if vim --cmd 'if v:version < 900 | q | else | cq | fi'
+then
+    sed -i -e "/Plug 'ervandew\/supertab'/ s/^/\"/" \
+        -e '/SuperTab settings/,/^$/ s/^/"/' ~/.vimrc
+fi
+
 # Get the plugin manager
 curl -Lfo ~/.vim/autoload/plug.vim --create-dirs \
     'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
