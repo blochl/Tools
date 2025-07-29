@@ -16,7 +16,7 @@ git_root="$(git rev-parse --show-toplevel)"
 find "${git_root}/" -path "${git_root}/.git" -prune -o -type f -print0 | xargs -0 sh -c '
     for file in "${@}"
     do
-        if file --mime "${file}" | grep -q "charset=[^[:space:]]*ascii"
+        if file --mime "${file}" | grep -q "charset=[^[:space:]]*\(ascii\|utf-8\)"
         then
             sed -i "s/[[:space:]]\+$//" "${file}"
             [ -z "$(tail -c1 "${file}")" ] || echo >> "${file}"
