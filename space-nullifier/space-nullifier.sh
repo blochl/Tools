@@ -11,6 +11,11 @@ fatal() {
     exit 1
 }
 
+if ! git diff --quiet || ! git diff --cached --quiet
+then
+    fatal "Please commit your current changes or stash them before running this script."
+fi
+
 git_root="$(git rev-parse --show-toplevel)"
 
 find "${git_root}/" -path "${git_root}/.git" -prune -o -type f -print0 | xargs -0 sh -c '
@@ -26,7 +31,9 @@ find "${git_root}/" -path "${git_root}/.git" -prune -o -type f -print0 | xargs -
 
 if git diff --quiet
 then
-    log "SUCCESS"
+    log "SUCCESS: No commits need to be modified."
 else
-    fatal "Trailing white spaces, DOS line endings, or no newline at EOF detected."
+    fatal "Trailing white spaces, DOS line endings, or no newline at EOF detected."`
+         `"\nI have made the necessary fixes."`
+         `"\nPlease amend the commits where they were introduced before pushing."
 fi
