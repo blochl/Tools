@@ -3,7 +3,7 @@
 set -e
 
 log() {
-    >&2 printf "%s\n" "${*}"
+    >&2 printf "%b\n" "${*}"
 }
 
 fatal() {
