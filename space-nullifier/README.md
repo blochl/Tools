@@ -10,3 +10,6 @@ If any of the above are present, the script corrects these, and exits with an
 error. If nothing is changed - it exits with success.
 
 A great tool for self-verification and inclusion in CI.
+
+Also a Git hook variant is available to prevent commits that introduce these:
+`pre-commit`
