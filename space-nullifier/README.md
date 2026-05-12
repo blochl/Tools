@@ -13,3 +13,6 @@ A great tool for self-verification and inclusion in CI.
 
 Also a Git hook variant is available to prevent commits that introduce these:
 `pre-commit`
+
+A varinamt exists which also unifies JSON files' formatting:
+`space-nullifier-with-json.sh`
